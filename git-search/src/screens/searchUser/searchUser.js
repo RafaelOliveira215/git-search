@@ -27,24 +27,25 @@ const SearchUser = () => {
         }).catch(()=>{
             window.alert("Usuario não encontrado")
         })
+        axios.get(`https://api.github.com/users/${userSearch}/repos`).then(response=>{
+            setCurrentUserRepos(response.data)
+        })
+        axios.get(`https://api.github.com/users/${userSearch}/starred`).then(response=>{
+            setCurrentUserStarred(response.data)
+            
+        })
     }
 
     const handleRepoCheck = () =>{
-        axios.get(`https://api.github.com/users/${currentUser.login}/repos`).then(response=>{
-            setCurrentUserRepos(response.data)
-            setRenderUserCard(false)
+        setRenderUserCard(false)
             setRenderUserRepos(true)
             setRenderUserStarred(false)
-        })
     }
 
     const handleRepoStarred = () =>{
-        axios.get(`https://api.github.com/users/${currentUser.login}/starred`).then(response=>{
-            setCurrentUserStarred(response.data)
-            setRenderUserCard(false)
-            setRenderUserRepos(false)
-            setRenderUserStarred(true)
-        })
+        setRenderUserCard(false)
+        setRenderUserRepos(false)
+        setRenderUserStarred(true)
     }
   return (
       <div>
