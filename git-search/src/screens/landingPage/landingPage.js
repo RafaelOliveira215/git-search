@@ -1,11 +1,16 @@
 import React from "react"
-import axios from "axios"
+import { useHistory } from "react-router";
 
 const SearchUser = () => {
+    const history = useHistory()
 
-
+    const goToSearchPage = () => {
+        history.push("/search");
+      };
   return (
-   "funciona"
+    <div>
+       <button onClick={()=>goToSearchPage()}>ir para pesquisa</button>
+   </div>
   );
 };
 export default SearchUser
