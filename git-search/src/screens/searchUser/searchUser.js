@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import axios from "axios"
+import UserCard from "../../components/userCard"
 
 const SearchUser = () => {
     const [userSearch,setUserSearch] = useState(undefined)
@@ -32,14 +33,16 @@ const SearchUser = () => {
             setCurrentUserStarred(response)
         })
     }
-
+console.log(currentUser)
   return (
       <div>
    <input onChange={onChangeUser}/>
    <button onClick={()=>handleSearch()}>buscar</button>
    {currentUser ?<button onClick={()=>handleRepoCheck()}>repositorios</button>:<button disabled={true}>repositorios</button>}
     {currentUser ?<button onClick={()=>handleRepoStarred()}>favoritos</button>:<button disabled={true}>favoritos</button>}
+    {currentUser ? <UserCard avatar={currentUser.avatar_url} name={currentUser.name} location ={currentUser.location}/> : null}
    </div>
+   
   );
 };
 export default SearchUser
