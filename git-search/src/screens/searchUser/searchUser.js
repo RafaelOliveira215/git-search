@@ -47,22 +47,25 @@ const SearchUser = () => {
         setRenderUserRepos(false)
         setRenderUserStarred(true)
     }
+ 
   return (
       <div>
+          <form onSubmit={event=>{event.preventDefault()}}>
    <input onChange={onChangeUser}/>
    <button onClick={()=>handleSearch()}>buscar</button>
+   </form> 
    {currentUser ?<button onClick={()=>handleRepoCheck()}>repositorios</button>:<button disabled={true}>repositorios</button>}
     {currentUser ?<button onClick={()=>handleRepoStarred()}>favoritos</button>:<button disabled={true}>favoritos</button>}
     {renderUserCard ? <UserCard avatar={currentUser.avatar_url} name={currentUser.name} location ={currentUser.location}/> : null}
-    {renderUserRepos ? currentUserRepos.map(repo =>{
+    {renderUserRepos && currentUserRepos ? currentUserRepos.map(repo =>{
         return(
-            <RepoListingCard repo={repo.name} cloneUrl={repo.clone_url} /> 
+            <RepoListingCard key={repo.id} repo={repo.name} cloneUrl={repo.clone_url} /> 
         )
     }): null}
-    {renderUserStarred ? currentUserStarred.map(repo =>{
+    {renderUserStarred && currentUserStarred ? currentUserStarred.map(repo =>{
         
         return(
-            <RepoListingCard repo={repo.name} cloneUrl={repo.clone_url} /> 
+            <RepoListingCard key={repo.id} repo={repo.name} cloneUrl={repo.clone_url} /> 
         )
     }): null}
     
