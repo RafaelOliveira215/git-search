@@ -1,73 +1,98 @@
-import React, {useState} from "react"
+import React, {useState,useEffect} from "react"
 import axios from "axios"
 import UserCard from "../../components/userCard"
 import RepoListingCard from "../../components/repoListingCard";
+import { BaseURL } from "../../services/contants";
 
 const SearchUser = () => {
-    const [userSearch,setUserSearch] = useState(undefined)
-    const [currentUser,setCurrentUser] = useState(undefined)
-    const [currentUserRepos,setCurrentUserRepos] = useState(undefined)
-    const [currentUserStarred,setCurrentUserStarred] = useState(undefined)
-    const [renderUserCard,setRenderUserCard] = useState(false)
-    const [renderUserRepos,setRenderUserRepos] = useState(false)
-    const [renderUserStarred,setRenderUserStarred] = useState(false)
+    const [userSearch,setUserSearch] = useState(null)
+    const [currentUser,setCurrentUser] = useState(null)
+    const [currentUserRepos,setCurrentUserRepos] = useState(null)
+    const [currentUserStarred,setCurrentUserStarred] = useState(null)
+    const [switcher,setSwitcher] = useState()
+
+    useEffect(() => {
+        if(currentUser?.name){
+            document.title = `Inpecting: ${currentUser.name}`
+        }else{
+            document.title = "Github searcher"
+        }
+        
+      }, [currentUser])
     
     const onChangeUser = (event) => {
         setUserSearch(event.target.value)
     }
 
     const handleSearch = () =>{
-        axios.get(`https://api.github.com/users/${userSearch}`).then(response=>{
+        axios.get(`${BaseURL}/${userSearch}`).then(response=>{
             setCurrentUser(response.data)
-            setRenderUserCard(true)
-            setRenderUserRepos(false)
-            setRenderUserStarred(false)
             setCurrentUserRepos(undefined)
             setCurrentUserStarred(undefined)
+            setSwitcher("userDetails")
         }).catch(()=>{
             window.alert("Usuario não encontrado")
         })
-        axios.get(`https://api.github.com/users/${userSearch}/repos`).then(response=>{
+        axios.get(`${BaseURL}/${userSearch}/repos`).then(response=>{
             setCurrentUserRepos(response.data)
         })
-        axios.get(`https://api.github.com/users/${userSearch}/starred`).then(response=>{
+        axios.get(`${BaseURL}/${userSearch}/starred`).then(response=>{
             setCurrentUserStarred(response.data)
             
         })
     }
+    
 
-    const handleRepoCheck = () =>{
-        setRenderUserCard(false)
-            setRenderUserRepos(true)
-            setRenderUserStarred(false)
-    }
-
-    const handleRepoStarred = () =>{
-        setRenderUserCard(false)
-        setRenderUserRepos(false)
-        setRenderUserStarred(true)
+    const handleMenu = () =>{
+        
+        switch (switcher) {
+            case "userDetails":
+               return <UserCard avatar={currentUser.avatar_url} name={currentUser.name} location ={currentUser.location}/>
+               
+             case "userRepos":
+                 if(currentUserRepos){
+                    return (currentUserRepos.map(repo =>{
+                        return(
+                            <RepoListingCard key={repo.id} repo={repo.name} cloneUrl={repo.clone_url} /> 
+                        )
+                    }))
+                 }else{
+                    return <p>Este usuario ainda não possui repositorios</p>
+                }
+                
+            case "userStarred":
+                if(currentUserStarred){
+                    return (currentUserStarred.map(repo =>{
+        
+                        return(
+                            <RepoListingCard key={repo.id} repo={repo.name} cloneUrl={repo.clone_url} /> 
+                        )
+                    }))
+                }else{
+                    return <p>Este usuario ainda não possui repositorios favoritos</p>
+                }
+                
+        
+            default:
+                break;
+        }
     }
  
+    const handleSwitcher = (menu) =>{
+      setSwitcher(menu)
+    }
+
   return (
       <div>
           <form onSubmit={event=>{event.preventDefault()}}>
    <input onChange={onChangeUser}/>
    <button onClick={()=>handleSearch()}>buscar</button>
    </form> 
-   {currentUser ?<button onClick={()=>handleRepoCheck()}>repositorios</button>:<button disabled={true}>repositorios</button>}
-    {currentUser ?<button onClick={()=>handleRepoStarred()}>favoritos</button>:<button disabled={true}>favoritos</button>}
-    {renderUserCard ? <UserCard avatar={currentUser.avatar_url} name={currentUser.name} location ={currentUser.location}/> : null}
-    {renderUserRepos && currentUserRepos ? currentUserRepos.map(repo =>{
-        return(
-            <RepoListingCard key={repo.id} repo={repo.name} cloneUrl={repo.clone_url} /> 
-        )
-    }): null}
-    {renderUserStarred && currentUserStarred ? currentUserStarred.map(repo =>{
-        
-        return(
-            <RepoListingCard key={repo.id} repo={repo.name} cloneUrl={repo.clone_url} /> 
-        )
-    }): null}
+   <button onClick={()=>handleSwitcher("userDetails")} disabled={!!!currentUser}>usuario</button>
+   <button onClick={()=>handleSwitcher("userRepos")} disabled={!!!currentUser}>repositorios</button>
+   <button onClick={()=>handleSwitcher("userStarred")} disabled={!!!currentUser}>favoritos</button>
+   
+        {handleMenu()}
     
    </div>
    
