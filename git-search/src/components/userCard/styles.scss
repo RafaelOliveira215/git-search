@@ -1,0 +1,28 @@
+@import "../../variables/variables.scss";
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: $lightgray;
+}
+
+.userCard{
+    border:1px solid;
+    display: flex;
+    flex-direction: column; 
+    width: 300px;
+    height: 400px;
+    margin-top: 10px;
+
+}
+
+.userCard img{
+ height: 300px;
+ width: 300px;
+ margin: auto;
+ margin-top: 0;
+}
+
+.userCard p{
+    margin: auto;
+}

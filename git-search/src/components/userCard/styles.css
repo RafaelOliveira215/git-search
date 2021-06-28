@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f6f8fa;
+}
+
+.userCard {
+  border: 1px solid;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 300px;
+  height: 400px;
+  margin-top: 10px;
+}
+
+.userCard img {
+  height: 300px;
+  width: 300px;
+  margin: auto;
+  margin-top: 0;
+}
+
+.userCard p {
+  margin: auto;
+}
+/*# sourceMappingURL=styles.css.map */

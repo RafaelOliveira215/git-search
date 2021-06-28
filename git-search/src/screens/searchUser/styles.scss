@@ -1,0 +1,46 @@
+@import "../../variables/variables.scss";
+body{
+    margin: 0;
+    padding: 0;
+    background-color: $lightgray;
+}
+
+.searchUser{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+.searchUser form{
+    margin-top: 20px;
+}
+
+.searchUser form button{
+    border-radius: 5px;
+    height: 20px;
+    background-color: $green;
+    color: $white;
+    margin-left: 10px;
+}
+
+.searchUser button{
+    border-radius: 5px;
+    height: 20px;
+    background-color: $green;
+    color: $white;
+    cursor: pointer;
+    margin:3px;
+}
+
+.searchUser input{
+    width: 200px;
+    border-radius: 5px;
+}
+
+
+button:disabled,
+button[disabled]{
+  background-color: $lightgreen;
+  cursor:default;
+}

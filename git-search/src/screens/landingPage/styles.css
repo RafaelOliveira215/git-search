@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f6f8fa;
+}
+
+.landingPage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.landingPage button {
+  border-radius: 5px;
+  height: 35px;
+  background-color: #2ea44f;
+  color: #d5eddc;
+  cursor: pointer;
+}
+
+.landingPage img {
+  background-color: #f6f8fa;
+}
+/*# sourceMappingURL=styles.css.map */
