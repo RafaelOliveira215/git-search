@@ -1,5 +1,4 @@
-import react from "react";
-import './styles.css'
+import "./styles.css";
 
 const UserCard = (props) => {
   return (

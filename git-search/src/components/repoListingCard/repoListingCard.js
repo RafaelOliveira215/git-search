@@ -1,5 +1,5 @@
-import react, { useState, useRef } from "react";
-import './styles.css'
+import { useState, useRef } from "react";
+import "./styles.css";
 
 const RepoListingCard = (props) => {
   const [copyMessage, setCopyMessage] = useState();
